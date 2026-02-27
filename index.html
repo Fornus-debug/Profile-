@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web制作・自動化ポートフォリオ | Simplicity</title>
+    <meta name="description" content="集客と事務の自動化で、小規模事業をスマートに。ITが苦手なオーナー様のためのWeb制作・業務改善ポートフォリオです。">
+    <!-- Google Fonts: Manrope & Noto Sans JP -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;800&family=Noto+Sans+JP:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
+    <style>
+        /* 
+         * Base Styles & Reset 
+         */
+        :root {
+            --primary-color: #0f172a;
+            /* Deep Navy */
+            --accent-color: #c0a062;
+            /* Muted Gold for Premium feel */
+            --text-color: #334155;
+            --text-light: #94a3b8;
+            --bg-color: #f8fafc;
+            --white: #ffffff;
+            --glass-bg: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.5);
+            --shadow-soft: 0 10px 40px -10px rgba(0, 0, 0, 0.08);
+            --border-radius: 12px;
+            --container-width: 1100px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Manrope', 'Noto Sans JP', sans-serif;
+            color: var(--text-color);
+            line-height: 1.8;
+            background-color: var(--bg-color);
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* 
+         * Utility 
+         */
+        .container {
+            width: 90%;
+            max-width: var(--container-width);
+            margin: 0 auto;
+            padding: 0 1rem;
+            position: relative;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 1rem 3rem;
+            background: linear-gradient(135deg, var(--primary-color), #1e293b);
+            color: var(--white);
+            font-weight: 600;
+            border-radius: 50px;
+            letter-spacing: 0.05em;
+            box-shadow: 0 4px 15px rgba(15, 23, 42, 0.3);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(15, 23, 42, 0.4);
+            filter: brightness(1.1);
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 5vw, 2.5rem);
+            text-align: center;
+            margin-bottom: 4rem;
+            color: var(--primary-color);
+            font-weight: 800;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background-color: var(--accent-color);
+            margin: 1rem auto 0;
+            border-radius: 2px;
+        }
+
+        section {
+            padding: 8rem 0;
+        }
+
+        /* 
+         * Hero Section 
+         */
+        .hero {
+            height: 100vh;
+            min-height: 600px;
+            background: linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.7)), url('images/hero-bg.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            /* Parallaxish */
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero-content {
+            z-index: 2;
+            opacity: 0;
+            animation: fadeUp 1s ease-out 0.5s forwards;
+            max-width: 800px;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero p {
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            margin-bottom: 3rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+            opacity: 0.7;
+        }
+
+        .scroll-indicator::before {
+            content: '';
+            display: block;
+            width: 20px;
+            height: 32px;
+            border: 2px solid var(--white);
+            border-radius: 12px;
+            position: relative;
+        }
+
+        .scroll-indicator::after {
+            content: '';
+            display: block;
+            width: 4px;
+            height: 4px;
+            background: var(--white);
+            border-radius: 50%;
+            position: absolute;
+            top: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: scrollPoint 1.5s infinite;
+        }
+
+        /* 
+         * About Section 
+         */
+        .about-content {
+            background: var(--white);
+            padding: 4rem;
+            border-radius: 24px;
+            /* More rounded */
+            box-shadow: var(--shadow-soft);
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 6px;
+            height: 100%;
+            background: var(--accent-color);
+        }
+
+        .about-text p {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        /* 
+         * Works Section (Zig-Zag)
+         */
+        .works-list {
+            display: flex;
+            flex-direction: column;
+            gap: 6rem;
+        }
+
+        .work-item {
+            display: flex;
+            align-items: center;
+            gap: 4rem;
+        }
+
+        /* Provide alternating order for even items */
+        .work-item:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        .work-image-wrapper {
+            flex: 1;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+            transition: transform 0.4s ease;
+            position: relative;
+        }
+
+        /* Glass effect over image on hover? Or just simple zoom */
+        .work-image-wrapper:hover {
+            transform: translateY(-10px);
+        }
+
+        .work-image-wrapper img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .work-image-wrapper:hover img {
+            transform: scale(1.05);
+        }
+
+        .work-info {
+            flex: 1;
+            padding: 1rem;
+        }
+
+        .work-title {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+            position: relative;
+        }
+
+        .work-desc {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            margin-bottom: 2rem;
+            font-weight: 500;
+        }
+
+        .work-detail {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            border-left: 3px solid var(--accent-color);
+        }
+
+        .label {
+            display: block;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--accent-color);
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        
+        /* Works clickable card */
+        .work-item-link { cursor: pointer; }
+        .work-item-link:hover .work-image-wrapper img { transform: scale(1.02); }
+        .work-item-link .work-link { display: inline-block; margin-top: 1rem; font-weight: 700; color: var(--accent-color); }
+
+
+        /* 
+         * Services Section 
+         */
+        #services {
+            background-color: #f1f5f9;
+        }
+
+        .services-wrapper {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .service-card {
+            background: var(--white);
+            padding: 2.5rem;
+            border-radius: 16px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+
+        .service-card:hover {
+            border-color: rgba(192, 160, 98, 0.3);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        .service-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .service-card p {
+            font-size: 0.95rem;
+            color: var(--text-light);
+        }
+
+        /* 
+         * Contact Section 
+         */
+        .contact {
+            background: linear-gradient(135deg, var(--primary-color), #0b1120);
+            color: var(--white);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Decorative circle */
+        .contact::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -10%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(192, 160, 98, 0.1), transparent 70%);
+            border-radius: 50%;
+        }
+
+        .contact .section-title {
+            color: var(--white);
+        }
+
+        .contact .btn {
+            background: var(--white);
+            color: var(--primary-color);
+        }
+
+        .contact .btn:hover {
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+            transform: translateY(-3px) scale(1.02);
+            background: var(--white);
+        }
+
+        /* 
+         * Footer 
+         */
+        footer {
+            background: #020617;
+            color: #64748b;
+            text-align: center;
+            padding: 3rem 0;
+            font-size: 0.9rem;
+            letter-spacing: 0.05em;
+        }
+
+        /* 
+         * Animations 
+         */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes bounce {
+
+            0%,
+            20%,
+            50%,
+            80%,
+            100% {
+                transform: translateX(-50%) translateY(0);
+            }
+
+            40% {
+                transform: translateX(-50%) translateY(-10px);
+            }
+
+            60% {
+                transform: translateX(-50%) translateY(-5px);
+            }
+        }
+
+        @keyframes scrollPoint {
+            0% {
+                opacity: 0;
+                top: 8px;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0;
+                top: 20px;
+            }
+        }
+
+        /* 
+         * Floating CTA 
+         */
+        .floating-cta {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            background: var(--accent-color);
+            color: var(--white);
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            box-shadow: 0 10px 30px rgba(192, 160, 98, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .floating-cta:hover {
+            transform: scale(1.05) translateY(-5px);
+            filter: brightness(1.1);
+        }
+
+        @media (max-width: 600px) {
+            .floating-cta {
+                bottom: 1rem;
+                right: 1rem;
+                padding: 0.7rem 1.2rem;
+                font-size: 0.8rem;
+            }
+        }
+
+        /* 
+         * Mobile Responsive 
+         */
+        @media (max-width: 900px) {
+
+            .work-item,
+            .work-item:nth-child(even) {
+                flex-direction: column;
+                gap: 2rem;
+            }
+
+            .work-image-wrapper {
+                width: 100%;
+            }
+
+            .section-title {
+                margin-bottom: 3rem;
+            }
+
+            .about-content {
+                padding: 2rem;
+            }
+
+            section {
+                padding: 5rem 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Hero Section -->
+    <header class="hero">
+        <div class="container hero-content">
+            <h1>集客と事務の自動化を、これ1枚で。</h1>
+            <p>24時間働く問い合わせ窓口の構築から、面倒な事務作業の自動化まで。<br>ITが苦手なオーナー様の右腕としてビジネスを支えます。</p>
+            <a href="#contact" class="btn">お問い合わせはこちら</a>
+        </div>
+        <div class="scroll-indicator"></div>
+    </header>
+
+    <!-- About Section -->
+    <section id="about">
+        <div class="container">
+            <h2 class="section-title">私について</h2>
+            <div class="about-content">
+                <div class="about-text" style="display: grid; gap: 2rem;">
+                    <div>
+                        <span class="label">01. 徹底した伴走支援</span>
+                        <p style="font-weight: 500;">丸投げでOK。ITに詳しくない経営者様へ、専門用語を一切使わず相談から運用まで丁寧に伴走します。</p>
+                    </div>
+                    <div>
+                        <span class="label">02. 24時間集客マシン</span>
+                        <p style="font-weight: 500;">ただ作るだけで終わらせない。24時間休まず働く「問い合わせ獲得の仕組み」をあなたの代わりに構築します。</p>
+                    </div>
+                    <div>
+                        <span class="label">03. 事務作業の完全自動化</span>
+                        <p style="font-weight: 500;">面倒な事務作業をゼロに。サイトとスプレッドシートを連携させ、予約管理や名簿作成を自動化します。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Works Section (Zig-Zag Layout) -->
+    <section id="works">
+        <div class="container">
+            <h2 class="section-title">制作実績</h2>
+            <div class="works-list">
+
+                <!-- Case 1 -->
+                <a class="work-item work-item-link" href="https://fornus-debug.github.io/security.driver/" target="_blank" rel="noopener noreferrer">
+                    <div class="work-image-wrapper">
+                        <img src="images/work-corporate.png" alt="セキュリティドライバーサイト">
+                    </div>
+                    <div class="work-info">
+                        <h3 class="work-title">セキュリティドライバーサイト（高級感・守秘・信頼）</h3>
+                        <p class="work-desc">高単価サービス向けに「第一印象の信頼」を設計</p>
+                        <div class="work-detail">
+                            <span class="label">目的 (CV)</span>
+                            <p style="font-size: 0.95rem; margin-bottom: 1rem; font-weight: 700;">問い合わせ獲得 / 信頼形成</p>
+
+                            <span class="label">見せ所</span>
+                            <ul style="list-style: none; font-size: 0.9rem; margin-bottom: 1rem;">
+                                <li>・フルスクリーンHeroで世界観を即伝達</li>
+                                <li>・SERVICES→TRUST→CONTACTの導線設計</li>
+                            </ul>
+
+                            <span class="label">設計意図</span>
+                            <p style="font-size: 0.9rem; border-top: 1px solid #eee; margin-top: 0.5rem; padding-top: 0.5rem;">
+                                静けさ・品位・安心感が最初の3秒で伝わるトーンに統一し、迷わず問い合わせできる構成にしました。
+                            </p>
+                            <span class="work-link">制作例を見る →</span>
+                        </div>
+                    </div>
+                </a>
+
+
+                <!-- Case 2 -->
+                <a class="work-item work-item-link" href="https://fornus-debug.github.io/izakaya/" target="_blank" rel="noopener noreferrer">
+                    <div class="work-image-wrapper">
+                        <img src="images/work-restaurant.png" alt="居酒屋サイト">
+                    </div>
+                    <div class="work-info">
+                        <h3 class="work-title">居酒屋サイト（予約導線・来店促進）</h3>
+                        <p class="work-desc">予約まで最短で到達する、来店導線設計</p>
+                        <div class="work-detail">
+                            <span class="label">目的 (CV)</span>
+                            <p style="font-size: 0.95rem; margin-bottom: 1rem; font-weight: 700;">WEB予約 / 電話予約の獲得</p>
+
+                            <span class="label">見せ所</span>
+                            <ul style="list-style: none; font-size: 0.9rem; margin-bottom: 1rem;">
+                                <li>・Hero直下に予約CTA（常時表示も実装）</li>
+                                <li>・メニュー→店舗情報へ自然に誘導</li>
+                            </ul>
+
+                            <span class="label">設計意図</span>
+                            <p style="font-size: 0.9rem; border-top: 1px solid #eee; margin-top: 0.5rem; padding-top: 0.5rem;">
+                                シズル感のある写真を主役にしつつ、スマホでも親指1本で予約できる導線を優先しました。
+                            </p>
+                            <span class="work-link">制作例を見る →</span>
+                        </div>
+                    </div>
+                </a>
+
+
+                <!-- Case 3 -->
+                <a class="work-item work-item-link" href="https://fornus-debug.github.io/apareru/" target="_blank" rel="noopener noreferrer">
+                    <div class="work-image-wrapper">
+                        <img src="images/work-automation.png" alt="アパレルEC風サイト">
+                    </div>
+                    <div class="work-info">
+                        <h3 class="work-title">アパレルEC風サイト（UI/カテゴリ/カート）</h3>
+                        <p class="work-desc">世界観を保ちつつ、購入体験をUIで再現</p>
+                        <div class="work-detail">
+                            <span class="label">目的 (CV)</span>
+                            <p style="font-size: 0.95rem; margin-bottom: 1rem; font-weight: 700;">商品閲覧→購入導線の体験設計</p>
+
+                            <span class="label">見せ所</span>
+                            <ul style="list-style: none; font-size: 0.9rem; margin-bottom: 1rem;">
+                                <li>・Men/Women/Unisexのカテゴリ導線</li>
+                                <li>・商品カードUI＋カート表示</li>
+                            </ul>
+
+                            <span class="label">設計意図</span>
+                            <p style="font-size: 0.9rem; border-top: 1px solid #eee; margin-top: 0.5rem; padding-top: 0.5rem;">
+                                黒基調のタイポと余白でブランド感を担保し、回遊と購入の流れが途切れないUIを意識しました。
+                            </p>
+                            <span class="work-link">制作例を見る →</span>
+                        </div>
+                    </div>
+                </a>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services">
+        <div class="container">
+            <h2 class="section-title">提供サービス</h2>
+            <div class="services-wrapper">
+                <div class="service-card">
+                    <h3>Webサイト制作</h3>
+                    <p>コーポレートサイト、店舗サイト、ポートフォリオなど、目的に合わせたオリジナルデザイン。</p>
+                </div>
+                <div class="service-card">
+                    <h3>ランディングページ (LP)</h3>
+                    <p>商品やサービスの魅力を1ページに凝縮し、購入・問い合わせに繋げる特化型ページ。</p>
+                </div>
+                <div class="service-card">
+                    <h3>Webサイト修正・保守</h3>
+                    <p>既存サイトのテキスト変更、画像差し替え、スマートフォン表示の不具合修正など。</p>
+                </div>
+                <div class="service-card">
+                    <h3>業務効率化サポート</h3>
+                    <p>お問い合わせフォームの設置、自動返信メールの設定、顧客リスト自動生成など。</p>
+                </div>
+            </div>
+            <p style="text-align: center; color: var(--text-light); font-size: 0.9rem;">※
+                料金はプロジェクトの規模や要件によって柔軟に対応いたします。お気軽にご相談ください。</p>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title">お問い合わせ</h2>
+            <p style="margin-bottom: 3rem; font-size: 1.1rem; opacity: 0.9;">
+                Web制作に関するご相談、業務改善のご提案など、<br>
+                些細なことでもお気軽にご連絡ください。<br>
+                通常24時間以内に返信いたします。
+            </p>
+            <div id="contact-content">
+                <div
+                    style="display: flex; justify-content: center; gap: 2rem; margin-bottom: 3rem; flex-wrap: wrap; opacity: 0.9;">
+                    <div style="text-align: center;">
+                        <span
+                            style="display: block; font-size: 0.75rem; font-weight: 700; color: var(--accent-color);">SPEED</span>
+                        <span style="font-size: 1.1rem; font-weight: 600;">最短7日納品</span>
+                    </div>
+                    <div style="text-align: center;">
+                        <span
+                            style="display: block; font-size: 0.75rem; font-weight: 700; color: var(--accent-color);">FREE
+                            REVISION</span>
+                        <span style="font-size: 1.1rem; font-weight: 600;">修正3回まで無料</span>
+                    </div>
+                    <div style="text-align: center;">
+                        <span
+                            style="display: block; font-size: 0.75rem; font-weight: 700; color: var(--accent-color);">PRICE
+                            GUIDE</span>
+                        <span style="font-size: 1.1rem; font-weight: 600;">5万円〜（分割可）</span>
+                    </div>
+                </div>
+                <a href="https://docs.google.com/forms/" target="_blank" rel="noopener noreferrer" class="btn"
+                    onclick="showThanks(event)">お問い合わせフォームへ</a>
+            </div>
+            <div id="thanks-message" style="display: none; transform: translateY(20px); opacity: 0;">
+                <h3 style="font-size: 2rem; margin-bottom: 1rem;">お問い合わせありがとうございます！</h3>
+                <p>24時間以内に折り返しご連絡させていただきます。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Portfolio Name. Designed & Built with Simplicity.</p>
+        </div>
+    </footer>
+
+    <!-- Floating CTA -->
+    <a href="#contact" class="floating-cta">無料相談する</a>
+
+    <script>
+        function showThanks(event) {
+            // 注意: 実際のフォーム送信は外部のGoogle Formsに遷移しますが、
+            // ポートフォリオとしての「動作確認」や「サンクス表示」のイメージを見せるための簡易実装です
+            // window.open(event.currentTarget.href, '_blank'); 
+
+            const content = document.getElementById('contact-content');
+            const thanks = document.getElementById('thanks-message');
+
+            content.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            content.style.opacity = '0';
+            content.style.transform = 'translateY(-20px)';
+
+            setTimeout(() => {
+                content.style.display = 'none';
+                thanks.style.display = 'block';
+                setTimeout(() => {
+                    thanks.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                    thanks.style.opacity = '1';
+                    thanks.style.transform = 'translateY(0)';
+                }, 50);
+            }, 500);
+        }
+    </script>
+</body>
+
+</html>
